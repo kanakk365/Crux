@@ -1,4 +1,5 @@
 import { Job } from "../modles/job.model.js";
+import { Application } from "../modles/application.model.js";
 import mongoose from "mongoose";
 
 export const postJob = async (req, res) => {
@@ -120,6 +121,7 @@ export const getAdminJobs = async (req, res) => {
         success: false,
       });
     }
+    console.log(mongoose.models)
     return res.status(200).json({
       jobs,
       success: true,
