@@ -10,7 +10,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { USER_API_ENDPOINT } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/store/Slice/authSlice";
+import { setAuthUser, setLoading } from "@/store/Slice/authSlice";
 import store from "@/store/store";
 import { Loader2 } from "lucide-react";
 
@@ -23,14 +23,12 @@ function Login() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector(store => store.auth);
-
+  const { loading } = useSelector((store) => store.auth);
 
   function changeEventHandler(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
 
-  
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -49,8 +47,11 @@ function Login() {
         withCredentials: true,
       });
       if (res.data.success) {
+        localStorage.setItem("userData", JSON.stringify(res.data.user));
+        dispatch(setAuthUser(res.data.user));
         toast.success(res.data.message);
-        navigate("/login");
+        navigate("/");
+        console.log(res.data.user);
       }
     } catch (e) {
       console.log(`Error while loggin in :: ${e}`);
@@ -76,7 +77,7 @@ function Login() {
               value={input.email}
               type="email"
               name="email"
-              palceholder="kain243@gmail.com"
+              placeholder="Enter your email"
             />
           </div>
           <div>

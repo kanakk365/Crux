@@ -14,7 +14,7 @@ export default function LatestJobs() {
       salary:"54 LPA"
     },
     {
-        link: "/page-1",
+        link: "/page-14",
         companyName: "Google",
         jobTitle:"Frontend dev",
         companyLocation:"India",
@@ -23,7 +23,7 @@ export default function LatestJobs() {
         jobType: "Full-Time",
         salary:"54 LPA"
       },{
-        link: "/page-1",
+        link: "/page-321",
         companyName: "Google",
         jobTitle:"Frontend dev",
         companyLocation:"India",
@@ -32,7 +32,7 @@ export default function LatestJobs() {
         jobType: "Full-Time",
         salary:"54 LPA"
       },{
-        link: "/page-1",
+        link: "/page-31",
         companyName: "Google",
         jobTitle:"Frontend dev",
         companyLocation:"India",
@@ -41,7 +41,7 @@ export default function LatestJobs() {
         jobType: "Full-Time",
         salary:"54 LPA"
       },{
-        link: "/page-1",
+        link: "/page-2",
         companyName: "Google",
         jobTitle:"Frontend dev",
         companyLocation:"India",
@@ -50,7 +50,7 @@ export default function LatestJobs() {
         jobType: "Full-Time",
         salary:"54 LPA"
       },{
-        link: "/page-1",
+        link: "/page-3",
         companyName: "Google",
         jobTitle:"Frontend dev",
         companyLocation:"India",
@@ -62,7 +62,7 @@ export default function LatestJobs() {
   ];
   return (
     <div className="container mx-auto">
-      <div className="w-[75%] mx-auto">
+      <div className="w-[80%] mx-auto">
         <h1 className=" text-3xl font-bold">Latest and Top Job Openings</h1>
 
         <HoverEffect items={items} className="" />

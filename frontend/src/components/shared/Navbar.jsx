@@ -10,35 +10,39 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ShimmerButton from "../ui/shimmer-button";
 import ShinyButton from "../ui/shiny-button";
+import { useSelector } from "react-redux";
 
 function Navbar() {
-  const user = true;
+  const { user } = useSelector((store) => store.auth);
+
   return (
     <div className="bg-white">
       <div className="flex justify-between items-center mx-auto max-w-7xl h-16 pt-2">
         <div>
-          <h1 className="text-3xl font-semibold cursor-pointer">Crux</h1>
+          <Link to={"/"}>
+            <h1 className="text-3xl font-semibold cursor-pointer">Crux</h1>
+          </Link>
         </div>
         <div className="flex items-center gap-10">
           <ul className="flex items-center font-medium text-lg gap-10">
-            <li className="text-gray-600 hover:text-black duration-500 hover:text-xl cursor-pointer">
-              Home
-            </li>
-            <li className="text-gray-600 hover:text-black duration-500 hover:text-xl cursor-pointer">
-              Jobs
-            </li>
-            <li className="text-gray-600 hover:text-black duration-500 hover:text-xl cursor-pointer">
-              Browse
-            </li>
+            <Link to={"/"}>
+              <li className="text-gray-600 hover:text-black duration-500 hover:text-xl cursor-pointer">
+                Home
+              </li>
+            </Link>
+            <Link to={"/jobs"}>
+              <li className="text-gray-600 hover:text-black duration-500 hover:text-xl cursor-pointer">
+                Jobs
+              </li>
+            </Link>
+            <Link to={"/browse"}>
+              <li className="text-gray-600 hover:text-black duration-500 hover:text-xl cursor-pointer">
+                Browse
+              </li>
+            </Link>
           </ul>
           <div>
             {user ? (
-              <div className="flex items-center gap-2">
-                <Link to={"/login"}>
-                  <ShinyButton>Login</ShinyButton>
-                </Link>
-              </div>
-            ) : (
               <Popover>
                 <PopoverTrigger asChild>
                   <Avatar className="cursor-pointer">
@@ -68,7 +72,9 @@ function Navbar() {
                       <div className="flex  w-fit items-center cursor-pointer text-base">
                         {" "}
                         <User2 />
-                        <Button variant="link">View Profile</Button>
+                        <Link to={"/profile"}>
+                          <Button variant="link">View Profile</Button>
+                        </Link>
                       </div>
                       <div className="flex  w-fit items-center cursor-pointer">
                         {" "}
@@ -78,6 +84,12 @@ function Navbar() {
                   </div>
                 </PopoverContent>
               </Popover>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link to={"/login"}>
+                  <ShinyButton>Login</ShinyButton>
+                </Link>
+              </div>
             )}
           </div>
         </div>
