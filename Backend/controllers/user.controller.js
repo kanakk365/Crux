@@ -129,19 +129,22 @@ export const updateProfile = async (req, res) => {
     if (skills) {
       skillsArray = skills.split(",");
     }
-    const userId = req.userId;
+    const userId = req.id;
+
     let user = await User.findOne({ _id: userId });
+
     if (!user) {
       return res.status(400).json({
-        message: "user not found ",
+        message: "User not found ",
         sucess: false,
       });
     }
     if (fullName) user.fullName = fullName;
     if (email) user.email = email;
     if (phoneNumber) user.phoneNumber = phoneNumber;
-    if (bio) user.bio = bio;
-    if (skills) user.skills = skills;
+    if (bio) user.profile.bio = bio;
+    if (skillsArray) user.profile.skills = skillsArray;
+    if (file) user.profile.resume = file.filename;
 
     await user.save();
 
@@ -155,7 +158,7 @@ export const updateProfile = async (req, res) => {
     };
 
     return res.status(200).json({
-      message: "profile updated ",
+      message: "Profile updated ",
       user,
       success: true,
     });

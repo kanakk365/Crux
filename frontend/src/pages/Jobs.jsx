@@ -3,8 +3,10 @@ import JobCard from "@/components/JobCard";
 import Navbar from "@/components/shared/Navbar";
 import React from "react";
 
+
 function Jobs() {
 
+  const jobId="faefeaf"
   const jobs= [1,2,3,4,5]
   return (
     <div className="max-w-7xl mx-auto">

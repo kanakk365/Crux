@@ -7,13 +7,23 @@ import {
 } from "@radix-ui/react-popover";
 import { LogOut, User2 } from "lucide-react";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShimmerButton from "../ui/shimmer-button";
 import ShinyButton from "../ui/shiny-button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "@/store/Slice/authSlice";
 
 function Navbar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { user } = useSelector((store) => store.auth);
+  const logoutHandler = () => {
+    dispatch(logoutUser(null));
+
+    navigate("/");
+  };
+
 
   return (
     <div className="bg-white">
@@ -78,7 +88,10 @@ function Navbar() {
                       </div>
                       <div className="flex  w-fit items-center cursor-pointer">
                         {" "}
-                        <LogOut /> <Button variant="link">Logout</Button>
+                        <LogOut />{" "}
+                        <Button variant="link" onClick={logoutHandler}>
+                          Logout
+                        </Button>
                       </div>
                     </div>
                   </div>

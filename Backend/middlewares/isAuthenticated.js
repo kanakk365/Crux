@@ -13,6 +13,7 @@ const isAuthenticated = async (req, res, next) => {
 
     if (isVerified) {
       req.id = isVerified.userId;
+      
       next();
       
     } else {

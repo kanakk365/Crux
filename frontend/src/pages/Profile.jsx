@@ -2,10 +2,12 @@ import Navbar from "@/components/shared/Navbar";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { File, Mail, Pen, Phone } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import AppliedJobs from "@/components/AppliedJobs";
+import UpdateProfile from "@/components/UpdateProfile";
 
 function Profile() {
+  const [open , setOpen]= useState(false)
   const skills=["React" , "Node", "Express"]
   const resume=true
   return (
@@ -23,7 +25,7 @@ function Profile() {
               <h1 className="text-2xl font-semibold flex gap-3 items-center">
                 Kanak
               </h1>
-              <button className="text-gray-500 hover:scale-110 cursor-pointer">
+              <button onClick={()=>{setOpen(true)}} className="text-gray-500 hover:scale-110 cursor-pointer">
                 <Pen width={16} />{" "}
               </button>
             </div>
@@ -66,6 +68,7 @@ function Profile() {
         <h1 className="text-lg font-semibold mb-3">Applied Job</h1>
         <AppliedJobs/>
       </div>
+      <UpdateProfile open={open} setOpen={setOpen}/>
     </div>
   );
 }
