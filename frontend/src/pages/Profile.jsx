@@ -5,32 +5,33 @@ import { File, Mail, Pen, Phone } from "lucide-react";
 import React, { useState } from "react";
 import AppliedJobs from "@/components/AppliedJobs";
 import UpdateProfile from "@/components/UpdateProfile";
+import { useSelector } from "react-redux";
 
 function Profile() {
   const [open , setOpen]= useState(false)
-  const skills=["React" , "Node", "Express"]
-  const resume=true
+  const { user } = useSelector((store) => store.auth);
+  
   return (
     <div>
       <Navbar />
       <div className="max-w-5xl mx-auto mt-8 flex flex-col sm:flex-row gap-10 p-7 border-gray-300 rounded-lg shadow-md mb-16">
         <div className="m-auto w-full sm:w-[20%] flex justify-center">
           <Avatar className="sm:w-32 sm:h-32 h-16 w-16">
-            <AvatarImage src="https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp" />
+            <AvatarImage src={user?.profile?.profilePhoto}/>
           </Avatar>
         </div>
         <div className="w-full px-4 ">
           <div className="p-4">
             <div className="flex gap-3 ">
               <h1 className="text-2xl font-semibold flex gap-3 items-center">
-                Kanak
+                {user.fullName}
               </h1>
               <button onClick={()=>{setOpen(true)}} className="text-gray-500 hover:scale-110 cursor-pointer">
                 <Pen width={16} />{" "}
               </button>
             </div>
 
-            <p className="text-base mb-4">Experienceed software developer</p>
+            <p className="text-base mb-4">{user.profile.bio}</p>
             <hr />
           </div>
           <div className="w-full mt-6 flex items-start flex-col sm:flex-row p-4">
@@ -38,27 +39,27 @@ function Profile() {
               <div className="flex gap-2">
                 <Phone className="text-gray-400" width={16} />{" "}
                 <p className="text-base text-gray-600 font-medium">
-                  7976206480
+                  {user.phoneNumber}
                 </p>
               </div>
 
               <div className="flex gap-2">
                 <Mail className="text-gray-400" width={16} />{" "}
                 <p className="text-base text-gray-600 font-medium">
-                  kanakkumarmahala000@gmail.com
+                 {user.email}
                 </p>
               </div>
               <div className="flex gap-2">
                 <File className="text-gray-400" width={16}/>
                 <p className="text-base text-gray-600 font-medium">Resume:</p>
-                {resume ? <a className="text-blue-700 hover:underline" href="youtube.com">you resume</a> : null}
+                {user.profile.resume ? <a className="text-blue-700 hover:underline" href={user?.profile?.resume}>{user.profile.resumeOriginName}</a> : null}
               </div>
             </div>
 
             <div className="text-left items-start  sm:w-[50%] w-full px-4 flex flex-col gap-3">
               <h1>Skills :</h1>
               <div className="flex gap-2 flex-wrap">
-                {skills.length !==0 ? skills.map((skill,index)=>(<Badge key={index}>{skill}</Badge>)) : null}
+                {user?.profile?.skills?.length !==0 ? user.profile.skills?.map((skill,index)=>(<Badge key={index}>{skill}</Badge>)) : null}
               </div>
             </div>
           </div>

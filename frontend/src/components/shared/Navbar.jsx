@@ -12,17 +12,36 @@ import ShimmerButton from "../ui/shimmer-button";
 import ShinyButton from "../ui/shiny-button";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/store/Slice/authSlice";
+import axios from "axios";
+import { USER_API_ENDPOINT } from "../utils/constants";
+import { toast } from "sonner";
 
 function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { user } = useSelector((store) => store.auth);
-  const logoutHandler = () => {
-    dispatch(logoutUser(null));
+  console.log(user?.profile?.profilePhoto)
+  
+  const logoutHandler = async () => {
+    console.log("CLICKED");
+    try {
+      const res = await axios.get(`${USER_API_ENDPOINT}/logout`, { withCredentials: true });
 
-    navigate("/");
+      
+      if (res.data.success) {
+        console.log("done")
+        dispatch(logoutUser(null));
+        toast.success(res.data.message);
+        navigate("/");  
+      }
+  
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "An error occurred while logging out");
+    }
   };
+  
 
 
   return (
@@ -57,8 +76,7 @@ function Navbar() {
                 <PopoverTrigger asChild>
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src="https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"
-                      alt="@shadcn"
+                      src={user?.profile?.profilePhoto}
                     />
                   </Avatar>
                 </PopoverTrigger>
@@ -67,7 +85,7 @@ function Navbar() {
                     <div className="flex gap-2 space-y-2 items-center">
                       <Avatar className="cursor-pointer">
                         <AvatarImage
-                          src="https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"
+                          src={user?.profile?.profilePhoto}
                           alt="@shadcn"
                         />
                       </Avatar>

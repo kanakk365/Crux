@@ -12,6 +12,7 @@ import { USER_API_ENDPOINT } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import store from "@/store/store";
 import { setLoading } from "@/store/Slice/authSlice";
+import { Loader2 } from "lucide-react";
 
 function Signup() {
   const [input, setInput] = useState({
@@ -43,9 +44,12 @@ function Signup() {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("password", input.password);
     formData.append("role", input.role);
-    console.log(input.fullName);
+    if(input.file){
+      formData.append("file",input.file)
+    }
+   
     try {
-      dispatch(useLoadin(true));
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_ENDPOINT}/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -80,7 +84,7 @@ function Signup() {
               onChange={changeEventHandler}
               type="text"
               name="fullName"
-              palceholder="Enter your name "
+              placeholder="Enter your name "
             />
           </div>
           <div>
@@ -90,7 +94,7 @@ function Signup() {
               onChange={changeEventHandler}
               type="email"
               name="email"
-              palceholder="kain243@gmail.com"
+              placeholder="kain243@gmail.com"
             />
           </div>
           <div>
@@ -141,7 +145,7 @@ function Signup() {
                 <Label className="font-semibold">Profile Image</Label>
                 <Input
                   onChange={changeFileHandler}
-                  accept="/image/*"
+                  accept="image/*"
                   type="file"
                   className="cursor-pointer w-56 "
                 />

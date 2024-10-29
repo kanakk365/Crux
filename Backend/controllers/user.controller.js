@@ -1,24 +1,31 @@
 import { User } from "../modles/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import getDataUri from "../utils/dataUri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
   try {
     const { fullName, email, password, phoneNumber, role } = req.body;
+    console.log({ fullName, email, password, phoneNumber, role });
 
     if (!fullName || !email || !password || !phoneNumber || !role) {
       return res.status(400).json({
         message: "Please enter all creds ",
-        sucess: false,
+        success: false,
       });
     }
+    const file = req.file;
+    console.log(file);
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
     const user = await User.findOne({ email });
 
     if (user) {
       return res.status(400).json({
         message: "User already exists ",
-        sucess: false,
+        success: false,
       });
     }
 
@@ -30,10 +37,13 @@ export const register = async (req, res) => {
       password: hashedPassword,
       phoneNumber,
       role,
+      profile: {
+        profilePhoto: cloudResponse.secure_url,
+      },
     });
     res.status(201).json({
       message: " Accound created successfully",
-      sucess: true,
+      success: true,
     });
   } catch (error) {
     console.log(`Error while registering user ${error}`);
@@ -47,7 +57,7 @@ export const login = async (req, res) => {
     if (!email || !password || !role) {
       return res.status(400).json({
         message: "Please fill all creds",
-        sucess: false,
+        success: false,
       });
     }
 
@@ -55,7 +65,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(400).json({
         message: "User not found",
-        sucess: false,
+        success: false,
       });
     }
 
@@ -64,14 +74,14 @@ export const login = async (req, res) => {
     if (!isPasswordMatch) {
       return res.status(400).json({
         message: "Password do not match",
-        sucess: false,
+        success: false,
       });
     }
 
     if (role !== user.role) {
       return res.status(400).json({
         message: "User doesn't exists with current role",
-        sucess: false,
+        success: false,
       });
     }
 
@@ -113,7 +123,7 @@ export const logout = async (req, res) => {
   try {
     return res.status(200).cookie("token", " ", { maxAge: 0 }).json({
       message: "Logged out successfully",
-      sucess: true,
+      success: true,
     });
   } catch (e) {
     console.log(`Error while logging out`);
@@ -123,7 +133,9 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullName, email, phoneNumber, bio, skills } = req.body;
+
     const file = req.file;
+    console.log(file);
 
     let skillsArray;
     if (skills) {
@@ -136,7 +148,7 @@ export const updateProfile = async (req, res) => {
     if (!user) {
       return res.status(400).json({
         message: "User not found ",
-        sucess: false,
+        success: false,
       });
     }
     if (fullName) user.fullName = fullName;
@@ -146,6 +158,14 @@ export const updateProfile = async (req, res) => {
     if (skillsArray) user.profile.skills = skillsArray;
     if (file) user.profile.resume = file.filename;
 
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      if (cloudResponse) {
+        user.profile.resume = cloudResponse.secure_url;
+        user.profile.resumeOriginName = file.originalname;
+      }
+    }
     await user.save();
 
     user = {
@@ -163,6 +183,6 @@ export const updateProfile = async (req, res) => {
       success: true,
     });
   } catch (e) {
-    console.log(` error while updating user info ${e}`);
+    console.log(` error while updating user info ${e.message}`);
   }
 };

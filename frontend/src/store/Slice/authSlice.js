@@ -3,7 +3,7 @@ import { act } from "react";
 
 const initialState={
     loading:false,
-    user: JSON.parse(localStorage.getItem('userData')) || null
+    user:  null
 
 }
 
