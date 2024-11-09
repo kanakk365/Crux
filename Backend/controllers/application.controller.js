@@ -4,10 +4,9 @@ import { User } from "../modles/user.model.js";
 
 export const applyJob = async (req, res) => {
   try {
+
     const userId = req.id;
     const jobId = req.params.id;
-    console.log(userId)
-    console.log(req)
     if (!jobId) {
       return res.status(400).json({
         message: "Job id is required",
@@ -21,7 +20,7 @@ export const applyJob = async (req, res) => {
     
     if (existinsgApplication) {
       return res.status(400).json({
-        message: "You alread applied",
+        message: "You already applied",
         success: false,
       });
     }
@@ -39,7 +38,6 @@ export const applyJob = async (req, res) => {
       job: jobId,
       applicant: userId,
     });
-    console.log(newApplication)
 
     job.applications.push(newApplication._id);
     await job.save();

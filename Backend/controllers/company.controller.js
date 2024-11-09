@@ -3,7 +3,7 @@ import { Company } from "../modles/company.model.js";
 export const registerCompany = async (req, res) => {
   try {
     const { companyName } = req.body;
-
+    const userId= req.id
     if (!companyName) {
       return res.status(400).json({
         message: "Company name required",

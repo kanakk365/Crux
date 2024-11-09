@@ -3,7 +3,7 @@ import { act } from "react";
 
 const initialState={
     loading:false,
-    user:  null
+    user:   null
 
 }
 

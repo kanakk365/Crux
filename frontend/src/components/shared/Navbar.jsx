@@ -21,10 +21,9 @@ function Navbar() {
   const navigate = useNavigate();
 
   const { user } = useSelector((store) => store.auth);
-  console.log(user?.profile?.profilePhoto)
   
-  const logoutHandler = async () => {
-    console.log("CLICKED");
+  const logoutHandler = async (event) => {
+    event.stopPropagation()
     try {
       const res = await axios.get(`${USER_API_ENDPOINT}/logout`, { withCredentials: true });
 
@@ -72,7 +71,7 @@ function Navbar() {
           </ul>
           <div>
             {user ? (
-              <Popover>
+              <Popover className="z-99 bg-white">
                 <PopoverTrigger asChild>
                   <Avatar className="cursor-pointer">
                     <AvatarImage
@@ -107,7 +106,7 @@ function Navbar() {
                       <div className="flex  w-fit items-center cursor-pointer">
                         {" "}
                         <LogOut />{" "}
-                        <Button variant="link" onClick={logoutHandler}>
+                        <Button className="z-99" variant="link" onClick={logoutHandler}>
                           Logout
                         </Button>
                       </div>

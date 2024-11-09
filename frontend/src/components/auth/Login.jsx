@@ -47,14 +47,13 @@ function Login() {
         withCredentials: true,
       });
       if (res.data.success) {
-        localStorage.setItem("userData", JSON.stringify(res.data.user));
         dispatch(setAuthUser(res.data.user));
         toast.success(res.data.message);
         navigate("/");
         console.log(res.data.user);
       }
     } catch (e) {
-      console.log(`Error while loggin in :: ${e}`);
+      console.log(`Error while login in :: ${e}`);
       toast.error(e.response.data.message);
     } finally {
       dispatch(setLoading(false));

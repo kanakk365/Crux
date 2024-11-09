@@ -82,16 +82,17 @@ export const getAllJobs = async (req, res) => {
       success: true,
     });
   } catch (e) {
-    console.log(`Error while serching jobs ${e}`);
+    console.log(`Error while searching jobs ${e}`);
   }
 };
 
 export const getJobById = async (req, res) => {
   try {
     const jobId = req.params.id;
-    console.log(mongoose.models);
     const job = await Job.findById(jobId).populate({
       path: "applications",
+    }).populate({
+      path:"company"
     });
     if (!job) {
       return res.status(400).json({
@@ -99,10 +100,12 @@ export const getJobById = async (req, res) => {
         success: false,
       });
     }
+    console.log(job)
     return res.status(200).json({
       job,
       success: true,
     });
+    
   } catch (e) {
     console.log(`Error while getting job by id :: ${e}`);
   }

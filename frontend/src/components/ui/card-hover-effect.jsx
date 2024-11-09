@@ -10,22 +10,22 @@ export const HoverEffect = ({ items, className }) => {
   return (
     <div
       className={cn(
-        "grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3  py-8",
+        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-8",
         className
       )}
     >
-      {items.map((item, idx) => (
+      {items?.slice(0,6).map((item, idx) => (
         <Link
-          href={item?.link}
-          key={item?.link}
-          className="relative group  block p-2 h-full w-full"
+          to={item?.link} 
+          key={item._id} 
+          className="relative group block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-800/[0.8] block  rounded-3xl"
+                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-800/[0.8] block rounded-3xl"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -40,12 +40,12 @@ export const HoverEffect = ({ items, className }) => {
             )}
           </AnimatePresence>
           <Card>
-            <CardCompanyName>{item.companyName}</CardCompanyName>
-            <CardLoc>{item.companyLocation}</CardLoc>
-            <CardTitle>{item.jobTitle}</CardTitle>
+            <CardCompanyName>{item.company.name}</CardCompanyName>
+            <CardLoc>{item.location}</CardLoc>
+            <CardTitle>{item.title}</CardTitle>
             <CardDescription>{item.description}</CardDescription>
             <div className="flex gap-4 mt-3">
-              <Badge className={"w"}>{item.positions}</Badge>
+              <Badge className={"w"}>{item.position} Positions</Badge>
               <Badge>{item.jobType}</Badge>
               <Badge>{item.salary}</Badge>
             </div>
@@ -70,6 +70,7 @@ export const Card = ({ className, children }) => {
     </div>
   );
 };
+
 export const CardTitle = ({ className, children }) => {
   return (
     <h4
@@ -108,6 +109,7 @@ export const CardCompanyName = ({ className, children }) => {
     </h5>
   );
 };
+
 export const CardDescription = ({ className, children }) => {
   return (
     <p
