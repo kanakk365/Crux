@@ -8,9 +8,8 @@ import {
   IconUserBolt,
 } from "@tabler/icons-react";
 import { Sidebar, SidebarBody, SidebarLink } from "../../ui/sidebar";
-import classNames from "classnames"; // If you don't have 'classnames' library installed, run npm install classnames
+import classNames from "classnames"; 
 import { useDispatch, useSelector } from "react-redux";
-import store from "@/store/store";
 import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_ENDPOINT } from "../../utils/constants";
@@ -18,8 +17,10 @@ import { logoutUser } from "@/store/Slice/authSlice";
 import { Button } from "../../ui/button";
 import { ScInput } from "../../ui/scInput";
 import CompaniesTab from "../CompaniesTab";
+import useGetAllCompanies from "@/hooks/useGetAllCompanies";
 
 export function SidebarDemo() {
+      
     const dispatch= useDispatch()
     const { user } = useSelector((store) => store.auth);
     const name = user.fullName;
@@ -157,6 +158,8 @@ const Dashboard = () => {
 };
 
 function AdminSidebar() {
+ 
+ 
   return (
     <div>
       <SidebarDemo />

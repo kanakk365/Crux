@@ -1,7 +1,8 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState= {
     singleCompany:null,
+    allCompanies:[]
 }
 
 const companySlice= createSlice({
@@ -10,9 +11,12 @@ const companySlice= createSlice({
     reducers:{
         setSingleCompany:(state, action)=>{
             state.singleCompany = action.payload
-        }
+        },
+        setAllCompanies:(state, action)=>{
+            state.allCompanies= action.payload
+        }}
     }
-})
+)
 
-export const {setSingleCompany} = companySlice.actions
+export const {setSingleCompany ,setAllCompanies} = companySlice.actions
 export default companySlice.reducer

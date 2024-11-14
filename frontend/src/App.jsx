@@ -8,10 +8,10 @@ import Jobs from "./pages/Jobs";
 import Browse from "./pages/Browse";
 import Profile from "./pages/Profile";
 import Details from "./pages/Details";
-import Admin from "./pages/Admin";
-import Companies from "./components/admin/Companies";
 import AdminJobs from "./components/admin/AdminJobs"
 import NewCompany from "./components/admin/NewCompany";
+import CompanySetup from "./components/admin/Sidebar/CompanySetup";
+import SeeCompanies from "./components/admin/SeeCompanies";
 
 function App() {
   return (
@@ -24,9 +24,10 @@ function App() {
         <Route path="/browse" element={<Browse />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/details/:id" element={<Details/>} />
-        <Route path="/admin/companies" element={<Companies/>} />
+        <Route path="/admin/companies" element={<SeeCompanies/>} />
         <Route path="/admin/jobs" element={<AdminJobs/>} />\
         <Route path="/admin/companies/create" element={<NewCompany/>} />\
+        <Route path="/admin/companies/:id" element={<CompanySetup/>} />\
         
       </Routes>
     </>

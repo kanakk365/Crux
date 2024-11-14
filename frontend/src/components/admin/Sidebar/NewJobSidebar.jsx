@@ -19,6 +19,7 @@ import { Button } from "../../ui/button";
 import { ScInput } from "../../ui/scInput";
 import CompaniesTab from "../CompaniesTab";
 import { Label } from "@/components/ui/label";
+import { setSingleCompany } from "@/store/Slice/companySlice";
 
 export function SidebarDemo() {
   const dispatch = useDispatch();
@@ -144,6 +145,7 @@ export const LogoIcon = () => {
 };
 
 const Dashboard = () => {
+  const dispatch= useDispatch()
   const navigate = useNavigate();
   const  [companyName , setCompanyName]= useState()
   const registerNewCompany= async()=>{
@@ -155,6 +157,7 @@ const Dashboard = () => {
         withCredentials: true
       })
       if(res.data?.success){
+        dispatch(setSingleCompany(res?.data?.company))
         toast.success(res.data.message)
         const companyId= res?.data?.company?._id
         navigate(`/admin/companies/${companyId}`)

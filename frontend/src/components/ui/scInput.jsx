@@ -1,6 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { cn } from "@/lib/utils";
+import { cn } from "../../../src/lib/utils.js";
 
 const ScInput = React.forwardRef(function ScInput({ className, type, ...props }, ref) {
   return (

@@ -14,7 +14,7 @@ function Jobs() {
       <Navbar />
       <div className="flex w-[80%] mx-auto gap-10 mt-8  ">
         <div className="w-[25%]">
-          <FilterSection />
+          <FilterSection/>
         </div>
         <div className="w-[75%] flex flex-col gap-6">
           {
