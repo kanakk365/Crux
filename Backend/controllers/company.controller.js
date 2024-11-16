@@ -5,7 +5,7 @@ import cloudinary from "../utils/cloudinary.js";
 export const registerCompany = async (req, res) => {
   try {
     const { companyName } = req.body;
-    const userId= req.id
+    const userId = req.id;
     if (!companyName) {
       return res.status(400).json({
         message: "Company name required",
@@ -78,21 +78,24 @@ export const updateCompany = async (req, res) => {
   try {
     const { name, description, website, location } = req.body;
     const file = req.file;
-    
+    let updatedData = { name, description, website, location };
+
     console.log(file);
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-    const logo = cloudResponse.secure_url
-    console.log({ name, description, website, location , logo })
-    
-    const updatedData = { name, description, website, location , logo };
-    
-    
+
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      const logo = cloudResponse.secure_url;
+      updatedData.logo = logo; 
+    }
+
+    console.log(updatedData);
 
     const company = await Company.findByIdAndUpdate(req.params.id, updatedData, {
       new: true,
     });
-    console.log(company)
+
+    console.log(company);
 
     if (!company) {
       return res.status(404).json({
@@ -100,11 +103,19 @@ export const updateCompany = async (req, res) => {
         success: false,
       });
     }
+
     return res.status(200).json({
       message: "Company information updated.",
       success: true,
+      data: company, 
     });
   } catch (e) {
-    console.log(`Error while updating company information ${e}`);
+    console.log(`Error while updating company information: ${e}`);
+    return res.status(500).json({
+      message: "An error occurred while updating company information.",
+      success: false,
+      error: e.message, 
+    });
   }
 };
+

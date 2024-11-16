@@ -12,6 +12,8 @@ import AdminJobs from "./components/admin/AdminJobs"
 import NewCompany from "./components/admin/NewCompany";
 import CompanySetup from "./components/admin/Sidebar/CompanySetup";
 import SeeCompanies from "./components/admin/SeeCompanies";
+import NewJob from "./components/admin/NewJob";
+import JobSetup from "./components/admin/JobSetup";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/details/:id" element={<Details/>} />
         <Route path="/admin/companies" element={<SeeCompanies/>} />
         <Route path="/admin/jobs" element={<AdminJobs/>} />\
+        <Route path="/admin/jobs/create" element={<NewJob/>} />\
+        <Route path="/admin/jobs/:id" element={<JobSetup/>} />\
         <Route path="/admin/companies/create" element={<NewCompany/>} />\
         <Route path="/admin/companies/:id" element={<CompanySetup/>} />\
         

@@ -1,4 +1,4 @@
-import { USER_API_ENDPOINT } from "@/components/utils/constants";
+import { COMPANY_API_ENDPOINT} from "@/components/utils/constants";
 import { setSingleCompany } from "@/store/Slice/companySlice";
 import axios from "axios";
 import React, { useEffect } from "react";
@@ -9,8 +9,9 @@ function useGetSingleCompany(companyId) {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchCompany = async () => {
+      console.log("in hook")
       try {
-        const res = await axios.get(`${USER_API_ENDPOINT}/get/${companyId}`);
+        const res = await axios.get(`${COMPANY_API_ENDPOINT}/get/${companyId}`,{withCredentials:true} );
         if (res.data.success) {
           dispatch(setSingleCompany(res.data.company));
         }

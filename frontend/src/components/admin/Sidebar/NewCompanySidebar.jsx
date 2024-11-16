@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -8,19 +8,18 @@ import {
   IconUserBolt,
 } from "@tabler/icons-react";
 import { Sidebar, SidebarBody, SidebarLink } from "../../ui/sidebar";
-import classNames from "classnames";
+import classNames from "classnames"; // If you don't have 'classnames' library installed, run npm install classnames
 import { useDispatch, useSelector } from "react-redux";
 import store from "@/store/store";
 import { toast } from "sonner";
 import axios from "axios";
-import { USER_API_ENDPOINT } from "../../utils/constants";
+import { COMPANY_API_ENDPOINT, USER_API_ENDPOINT } from "../../utils/constants";
 import { logoutUser } from "@/store/Slice/authSlice";
-import { ScInput } from "@/components/ui/scInput";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../ui/button";
+import { ScInput } from "../../ui/scInput";
 import CompaniesTab from "../CompaniesTab";
-import { setSearchCompanyByText } from "@/store/Slice/companySlice";
-import AdminJobsTab from "../AdminJobsTab";
-import { setSearchAdminJobByText } from "@/store/Slice/jobSlice";
+import { Label } from "@/components/ui/label";
+import { setSingleCompany } from "@/store/Slice/companySlice";
 
 export function SidebarDemo() {
   const dispatch = useDispatch();
@@ -146,32 +145,57 @@ export const LogoIcon = () => {
 };
 
 const Dashboard = () => {
+  const dispatch= useDispatch()
   const navigate = useNavigate();
-  const [input, setInput] = useState("");
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(setSearchAdminJobByText(input));
-  }, [input]);
+  const  [companyName , setCompanyName]= useState()
+  const registerNewCompany= async()=>{
+    try {
+      const res = await axios.post(`${COMPANY_API_ENDPOINT}/register` , {companyName} , {
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      })
+      if(res.data?.success){
+        dispatch(setSingleCompany(res?.data?.company))
+        toast.success(res.data.message)
+        const companyId= res?.data?.company?._id
+        navigate(`/admin/companies/${companyId}`)
+      }
+      console.log(res)
+    } catch (error) {
+      
+    }
+  }
   return (
     <div className="flex flex-1">
-      <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
-        <div className="flex justify-between m-10 px-5">
+      <div className=" p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
+        <div className="m-20 p-10">
+          <div className="flex flex-col gap-2 mb-5">
+            <h1 className="text-2xl font-semibold">Your Company Name</h1>
+            <p className="text-gray-500">
+              What would you like to give your company name? You can change this
+              later
+            </p>
+          </div>
+          <Label className="text-base">Company Name</Label>
           <ScInput
-            className="w-fit"
-            placeholder="Filter by name or Role"
-            onChange={(e) => setInput(e.target.value)}
+            type="text"
+            className="my-2 "
+            placeholder="Google, Chat gpt..."
+            onChange={(e)=>setCompanyName(e.target.value)}
           />
-          <Button onClick={() => navigate("/admin/jobs/create")}>
-            New Jobs
-          </Button>
+          <div className="flex gap-5 my-10 ">
+            <Button variant="outline" onClick={()=>navigate("/admin/companies")}>Cancel</Button>
+            <Button onClick={registerNewCompany}>Continue</Button>
+          </div>
         </div>
-        <AdminJobsTab />
       </div>
     </div>
   );
 };
 
-function AdminSidebarJobs() {
+function AdminSidebar() {
   return (
     <div>
       <SidebarDemo />
@@ -179,4 +203,4 @@ function AdminSidebarJobs() {
   );
 }
 
-export default AdminSidebarJobs;
+export default AdminSidebar;

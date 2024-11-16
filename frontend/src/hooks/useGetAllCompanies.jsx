@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux'
 
 const useGetAllCompanies = () => {
     const dispatch = useDispatch();
-    console.log("i")
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
@@ -18,8 +17,6 @@ const useGetAllCompanies = () => {
                 console.error(error);
             }
         };
-
-        console.log("Fetching companies...");
         fetchCompanies();
     }, []);
 

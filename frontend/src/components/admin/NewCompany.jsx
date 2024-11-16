@@ -1,9 +1,9 @@
 import React from 'react'
-import NewJobSidebar from './Sidebar/NewJobSidebar'
+import NewCompanySidebar from './Sidebar/NewCompanySidebar'
 
 function NewCompany() {
   return (
-    <div><NewJobSidebar/></div>
+    <div><NewCompanySidebar/></div>
   )
 }
 

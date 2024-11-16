@@ -20,6 +20,7 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 
 import { Label } from "@/components/ui/label.jsx";
 import { logoutUser } from "../../../store/Slice/authSlice";
+import useGetSingleCompany from "@/hooks/useGetSingleCompany";
 
 export function SidebarDemo() {
   const dispatch = useDispatch();
@@ -145,9 +146,11 @@ export const LogoIcon = () => {
 };
 
 const Dashboard = () => {
+  const params = useParams();
+  console.log("here")
+  useGetSingleCompany(params.id)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const params = useParams();
   const [input, setInput] = useState({
     name: "",
     description: "",
