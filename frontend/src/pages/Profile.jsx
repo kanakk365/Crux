@@ -6,11 +6,12 @@ import React, { useState } from "react";
 import AppliedJobs from "@/components/AppliedJobs";
 import UpdateProfile from "@/components/UpdateProfile";
 import { useSelector } from "react-redux";
+import useGetAllAppliedJobs from "@/hooks/useGetAllAppliedJobs";
 
 function Profile() {
   const [open , setOpen]= useState(false)
   const { user } = useSelector((store) => store.auth);
-  
+  useGetAllAppliedJobs()
   return (
     <div>
       <Navbar />

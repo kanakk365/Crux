@@ -11,7 +11,7 @@ import {
 import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Edit2, MoreHorizontal } from "lucide-react";
+import { Edit2, Eye, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -59,10 +59,10 @@ function AdminJobsTab() {
                   <PopoverTrigger>
                     <MoreHorizontal />
                   </PopoverTrigger>
-                  <PopoverContent className="w-24">
-                    <div onClick={()=>navigate(`/admin/companies/${company._id}`)} className="flex items-center gap-2 w-fit cursor-pointer">
-                      <Edit2 className="w-4" />
-                      <span className="text-base">Edit</span>
+                  <PopoverContent className="w-32">
+                    <div onClick={()=>navigate(`/admin/jobs/${job._id}/applicants`)} className="flex items-center gap-2 w-fit cursor-pointer">
+                      <Eye className="w-4" />
+                      <span className="text-base">Applicants</span>
                     </div>
                   </PopoverContent>
                 </Popover>

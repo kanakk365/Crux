@@ -1,17 +1,29 @@
 import JobCard from "@/components/JobCard";
 import Navbar from "@/components/shared/Navbar";
-import React from "react";
+import useGetAllJobs from "@/hooks/useGetAllJobs";
+import { setSearchQuery } from "@/store/Slice/jobSlice";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function Browse() {
-  const jobs = [1, 2, 3, 4, 5];
+  useGetAllJobs();
+  const dispatch = useDispatch();
+  const { allJobs } = useSelector((store) => store.job);
+  useEffect(() => {
+    console.log("hell");
+    return () => {
+      dispatch(setSearchQuery(""));
+    };
+  });
+
   return (
     <div>
       <Navbar />
       <div className="max-w-4xl mx-auto flex flex-col gap-6 mt-8 ">
-        <h1 className="text-lg font-semibold">{`Search Result (${jobs.length})`}</h1>
-        {jobs.map((job) => (
+        <h1 className="text-lg font-semibold">{`Search Result (${allJobs?.length})`}</h1>
+        {allJobs?.map((job) => (
           <div className="">
-            <JobCard />
+            <JobCard job={job} key={job?._id} />
           </div>
         ))}
       </div>

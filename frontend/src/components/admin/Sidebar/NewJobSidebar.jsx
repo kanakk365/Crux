@@ -8,11 +8,15 @@ import {
   IconUserBolt,
 } from "@tabler/icons-react";
 import { Sidebar, SidebarBody, SidebarLink } from "../../ui/sidebar";
-import classNames from "classnames"; 
+import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import axios from "axios";
-import { COMPANY_API_ENDPOINT, USER_API_ENDPOINT } from "../../utils/constants";
+import {
+  COMPANY_API_ENDPOINT,
+  JOB_API_ENDPOINT,
+  USER_API_ENDPOINT,
+} from "../../utils/constants";
 import { Button } from "../../ui/button";
 import { ScInput } from "../../ui/scInput";
 import CompaniesTab from "../CompaniesTab";
@@ -21,6 +25,14 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label.jsx";
 import { logoutUser } from "../../../store/Slice/authSlice";
 import useGetSingleCompany from "@/hooks/useGetSingleCompany";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../ui/select";
 
 export function SidebarDemo() {
   const dispatch = useDispatch();
@@ -144,102 +156,77 @@ export const LogoIcon = () => {
     </Link>
   );
 };
-
+const companyArray = [];
 const Dashboard = () => {
-  const params = useParams();
-  console.log("here")
-  useGetSingleCompany(params.id)
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [input, setInput] = useState({
-    name: "",
+    title: "",
     description: "",
-    website: "",
+    requirements: "",
+    salary: "",
     location: "",
-    file: null,
+    jobType: "",
+    experience: "",
+    position: 0,
+    companyId: "",
   });
 
-  const { singleCompany } = useSelector((store) => store.company);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const { allCompanies } = useSelector((store) => store.company);
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-  const changeFileHandler = (e) => {
-    const file = e.target.files?.[0];
-    setInput({ ...input, file });
+
+  const selectChangeHandler = (value) => {
+    const selectedCompany = allCompanies.find(
+      (company) => company.name.toLowerCase() === value
+    );
+    setInput({ ...input, companyId: selectedCompany._id });
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", input.name);
-    formData.append("description", input.description);
-    formData.append("website", input.website);
-    formData.append("location", input.location);
-    if (input.file) {
-      formData.append("file", input.file);
-    }
 
     try {
-      console.log(input);
       setLoading(true);
-      const res = await axios.put(
-        `${COMPANY_API_ENDPOINT}/update/${params.id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
-      );
+
+      const res = await axios.post(`${JOB_API_ENDPOINT}/post`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
       if (res.data.success) {
         toast.success(res.data.message);
-        navigate("/admin/companies");
+        navigate("/admin/jobs");
       }
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
       toast.error(error.response.data.message);
+      console.log(`Error while posting job ${error}`);
     } finally {
-      setLoading(false);
+      setLoading: false;
     }
   };
 
-  useEffect(() => {
-    setInput({
-      name: singleCompany.name || "",
-      description: singleCompany.description || "",
-      website: singleCompany.website || "",
-      location: singleCompany.location || "",
-      file: singleCompany.file || null,
-    });
-  }, [singleCompany]);
-
   return (
     <div className="flex flex-1">
-      <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
-        <div className="max-w-xl mx-auto my-20">
-          <form onSubmit={submitHandler}>
-            <div className="flex items-center gap-5 p-8">
-              <Button
-                onClick={() => navigate("/admin/companies")}
-                variant="outline"
-                className="flex items-center gap-2 text-gray-500 font-semibold"
-              >
-                <ArrowLeft />
-                <span>Back</span>
-              </Button>
-              <h1 className="font-bold text-xl">Company Setup</h1>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
+      <div className=" p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
+        <div className="flex items-center justify-center w-screen my-5">
+          <form
+            onSubmit={submitHandler}
+            className="p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md"
+          >
+            <div className="grid grid-cols-2 gap-2">
               <div>
-                <Label>Company Name</Label>
+                <Label>Title</Label>
                 <ScInput
                   type="text"
-                  name="name"
-                  value={input.name}
+                  name="title"
+                  value={input.title}
                   onChange={changeEventHandler}
+                  className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                 />
               </div>
               <div>
@@ -249,15 +236,27 @@ const Dashboard = () => {
                   name="description"
                   value={input.description}
                   onChange={changeEventHandler}
+                  className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                 />
               </div>
               <div>
-                <Label>Website</Label>
+                <Label>Requirements</Label>
                 <ScInput
                   type="text"
-                  name="website"
-                  value={input.website}
+                  name="requirements"
+                  value={input.requirements}
                   onChange={changeEventHandler}
+                  className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                />
+              </div>
+              <div>
+                <Label>Salary</Label>
+                <ScInput
+                  type="text"
+                  name="salary"
+                  value={input.salary}
+                  onChange={changeEventHandler}
+                  className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                 />
               </div>
               <div>
@@ -267,16 +266,57 @@ const Dashboard = () => {
                   name="location"
                   value={input.location}
                   onChange={changeEventHandler}
+                  className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                 />
               </div>
               <div>
-                <Label>Logo</Label>
+                <Label>Job Type</Label>
                 <ScInput
-                  type="file"
-                  accept="image/*"
-                  onChange={changeFileHandler}
+                  type="text"
+                  name="jobType"
+                  value={input.jobType}
+                  onChange={changeEventHandler}
+                  className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                 />
               </div>
+              <div>
+                <Label>Experience Level</Label>
+                <ScInput
+                  type="text"
+                  name="experience"
+                  value={input.experience}
+                  onChange={changeEventHandler}
+                  className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                />
+              </div>
+              <div>
+                <Label>No of Postion</Label>
+                <ScInput
+                  type="number"
+                  name="position"
+                  value={input.position}
+                  onChange={changeEventHandler}
+                  className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                />
+              </div>
+              {allCompanies.length > 0 && (
+                <Select onValueChange={selectChangeHandler}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select a Company" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {allCompanies.map((company) => {
+                        return (
+                          <SelectItem value={company?.name?.toLowerCase()}>
+                            {company.name}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
             </div>
             {loading ? (
               <Button className="w-full my-4">
@@ -285,8 +325,13 @@ const Dashboard = () => {
               </Button>
             ) : (
               <Button type="submit" className="w-full my-4">
-                Update
+                Post New Job
               </Button>
+            )}
+            {allCompanies.length === 0 && (
+              <p className="text-xs text-red-600 font-bold text-center my-3">
+                *Please register a company first, before posting a jobs
+              </p>
             )}
           </form>
         </div>

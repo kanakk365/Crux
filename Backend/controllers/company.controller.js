@@ -80,7 +80,7 @@ export const updateCompany = async (req, res) => {
     const file = req.file;
     let updatedData = { name, description, website, location };
 
-    console.log(file);
+  
 
     if (file) {
       const fileUri = getDataUri(file);
@@ -89,13 +89,12 @@ export const updateCompany = async (req, res) => {
       updatedData.logo = logo; 
     }
 
-    console.log(updatedData);
+ 
 
     const company = await Company.findByIdAndUpdate(req.params.id, updatedData, {
       new: true,
     });
 
-    console.log(company);
 
     if (!company) {
       return res.status(404).json({

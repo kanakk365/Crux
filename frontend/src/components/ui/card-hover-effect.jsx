@@ -1,11 +1,12 @@
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Badge } from "./badge";
 
 export const HoverEffect = ({ items, className }) => {
   let [hoveredIndex, setHoveredIndex] = useState(null);
+  const navigate= useNavigate()
 
   return (
     <div
@@ -15,10 +16,10 @@ export const HoverEffect = ({ items, className }) => {
       )}
     >
       {items?.slice(0,6).map((item, idx) => (
-        <Link
-          to={item?.link} 
+        <div
+          
           key={item._id} 
-          className="relative group block p-2 h-full w-full"
+          className="relative group block p-2 h-full w-full cursor-pointer"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
@@ -39,7 +40,10 @@ export const HoverEffect = ({ items, className }) => {
               />
             )}
           </AnimatePresence>
-          <Card>
+          <Card onClick={() => {
+  console.log('Card clicked');
+  navigate(`/details/${item._id}`);
+}}>
             <CardCompanyName>{item.company.name}</CardCompanyName>
             <CardLoc>{item.location}</CardLoc>
             <CardTitle>{item.title}</CardTitle>
@@ -50,15 +54,17 @@ export const HoverEffect = ({ items, className }) => {
               <Badge>{item.salary}</Badge>
             </div>
           </Card>
-        </Link>
+        </div>
       ))}
     </div>
   );
 };
 
-export const Card = ({ className, children }) => {
+export const Card = ({ className, children ,onClick}) => {
+  
+
   return (
-    <div
+    <div onClick={onClick}
       className={cn(
         "rounded-2xl h-full w-full p-2 overflow-hidden bg-[#011627] border border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
         className

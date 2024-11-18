@@ -13,7 +13,6 @@ function JobCard({ job }) {
   const createdDate = new Date(job.createdAt);
   const now = new Date();
   const diff = now - createdDate;
-
   const seconds = Math.floor(diff / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
@@ -29,10 +28,7 @@ function JobCard({ job }) {
               <p className="text-sm font-semibold">{job.company.name}</p>
             </div>
             <div className="border-2 aspect-square h-[2.9rem] rounded-md">
-              <img
-                src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg"
-                alt=""
-              />
+              <img src={job?.company?.logo} alt="" />
             </div>
           </div>
           <div className="flex gap-8 mt-4">

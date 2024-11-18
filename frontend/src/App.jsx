@@ -14,6 +14,8 @@ import CompanySetup from "./components/admin/Sidebar/CompanySetup";
 import SeeCompanies from "./components/admin/SeeCompanies";
 import NewJob from "./components/admin/NewJob";
 import JobSetup from "./components/admin/JobSetup";
+import Applicants from "./components/admin/Sidebar/Applicants";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 function App() {
   return (
@@ -26,12 +28,14 @@ function App() {
         <Route path="/browse" element={<Browse />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/details/:id" element={<Details/>} />
-        <Route path="/admin/companies" element={<SeeCompanies/>} />
-        <Route path="/admin/jobs" element={<AdminJobs/>} />\
-        <Route path="/admin/jobs/create" element={<NewJob/>} />\
-        <Route path="/admin/jobs/:id" element={<JobSetup/>} />\
-        <Route path="/admin/companies/create" element={<NewCompany/>} />\
-        <Route path="/admin/companies/:id" element={<CompanySetup/>} />\
+
+        <Route path="/admin/companies" element={ <ProtectedRoute><SeeCompanies/></ProtectedRoute>  } />
+        <Route path="/admin/jobs" element={ <ProtectedRoute><AdminJobs/></ProtectedRoute>   } />\
+        <Route path="/admin/jobs/create" element={  <ProtectedRoute><NewJob/></ProtectedRoute>} />\
+        <Route path="/admin/jobs/:id" element={ <ProtectedRoute> <JobSetup/></ProtectedRoute>} />\
+        <Route path="/admin/jobs/:id/applicants" element={<ProtectedRoute> <Applicants/></ProtectedRoute>} />\
+        <Route path="/admin/companies/create" element={ <ProtectedRoute><NewCompany/></ProtectedRoute> } />\
+        <Route path="/admin/companies/:id" element={<ProtectedRoute><CompanySetup/></ProtectedRoute> } />\
         
       </Routes>
     </>

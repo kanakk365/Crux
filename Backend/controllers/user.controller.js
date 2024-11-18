@@ -7,7 +7,7 @@ import cloudinary from "../utils/cloudinary.js";
 export const register = async (req, res) => {
   try {
     const { fullName, email, password, phoneNumber, role } = req.body;
-    console.log({ fullName, email, password, phoneNumber, role });
+    
 
     if (!fullName || !email || !password || !phoneNumber || !role) {
       return res.status(400).json({
@@ -16,7 +16,7 @@ export const register = async (req, res) => {
       });
     }
     const file = req.file;
-    console.log(file);
+   
     const fileUri = getDataUri(file);
     const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
@@ -42,11 +42,11 @@ export const register = async (req, res) => {
       },
     });
     res.status(201).json({
-      message: " Accound created successfully",
+      message: " Account created successfully",
       success: true,
     });
   } catch (error) {
-    console.log(`Error while registering user ${error}`);
+    console.log(`Error while registering user ` , error);
   }
 };
 

@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import GridPattern from "./ui/animated-grid-pattern";
 import { FlipWords } from "./ui/flip-words";
 import WordRotate from "./ui/word-rotate";
 import { PlaceholdersAndVanishInput } from "./ui/placeholders-and-vanish-input";
 import Particles from "./ui/particles";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setSearchQuery } from "@/store/Slice/jobSlice";
 
 function HeroSection() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const searchJobHandler = () => {
+    dispatch(setSearchQuery(query));
+    navigate("/browse");
+  };
   return (
     <div className="text-center w-full ">
-      <GridPattern/>
-     
+      <GridPattern />
+
       <div className="flex flex-col mt-32 mb-20 gap-24  ">
         <div className="   flex flex-col gap-16 ">
           <div className="flex flex-col gap-4">
@@ -32,7 +42,12 @@ function HeroSection() {
         </div>
 
         <div>
-          <PlaceholdersAndVanishInput />
+          <PlaceholdersAndVanishInput
+            onSubmit={searchJobHandler}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+          />
         </div>
       </div>
     </div>
