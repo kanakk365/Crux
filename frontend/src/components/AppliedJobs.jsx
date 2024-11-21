@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 function AppliedJobs() {
    const {allAppliedJobs}= useSelector(store => store.application)
     return (
-        <div>
+        <div className='px-1'>
             <Table>
                 <TableCaption>A list of your applied jobs</TableCaption>
                 <TableHeader>

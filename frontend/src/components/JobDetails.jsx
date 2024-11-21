@@ -19,7 +19,7 @@ export default function JobDetails() {
       (application) => application.applicant === user?._id
     ) || false;
   const [applied, setApplied] = useState(isApplied);
-
+  console.log(isApplied);
 
   const params = useParams();
   const jobId = params.id;
@@ -42,7 +42,7 @@ export default function JobDetails() {
         dispatch(setSingleJob(updateSingleJob));
         toast.success(res.data.message);
       }
-      
+      console.log(res);
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
@@ -81,29 +81,14 @@ export default function JobDetails() {
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       <div className="flex justify-between items-start mb-6">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-lime-200 rounded-lg flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-lime-600"
-            >
-              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
-              <line x1="4" x2="4" y1="22" y2="15" />
-            </svg>
+          <div className="w-12 h-12 rounded-lg flex items-center justify-center ">
+            <img className="rounded-lg " src={singleJob?.company?.logo} alt="logo" />
           </div>
           <div>
             <h2 className="text-xl font-bold">{singleJob.company.name}</h2>
           </div>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline">Save</Button>
           <Button
             onClick={applied ? null : applyJobHandler}
             disabled={applied}
@@ -116,7 +101,7 @@ export default function JobDetails() {
         </div>
       </div>
       <h1 className="text-3xl font-bold mb-2">{singleJob.title}</h1>
-      <div className="flex gap-2 text-gray-600 mb-4">
+      <div className="flex text-sm sm:text-base gap-2 text-gray-600 mb-4">
         <span>₹ {singleJob.salary}</span>
         <span>|</span>
         <span>{singleJob.location}</span>
@@ -126,7 +111,12 @@ export default function JobDetails() {
         <span>{singleJob.jobType}</span>
       </div>
       <div className="flex gap-2 text-gray-600">
-        <p className="text-gray-500 mb-6">Posted: {days} days ago</p> <span>|</span> <p  className="text-gray-500 mb-6" > Applications: {singleJob.applications.length} </p>
+        <p className="text-gray-500 mb-6">Posted: {days} days ago</p>{" "}
+        <span>|</span>{" "}
+        <p className="text-gray-500 mb-6">
+          {" "}
+          Applications: {singleJob.applications.length}{" "}
+        </p>
       </div>
 
       <div className="grid grid-cols-2 gap-6">

@@ -15,7 +15,7 @@ function Profile() {
   return (
     <div>
       <Navbar />
-      <div className="max-w-5xl mx-auto mt-8 flex flex-col sm:flex-row gap-10 p-7 border-gray-300 rounded-lg shadow-md mb-16">
+      <div className="max-w-5xl mx-auto mt-8 flex flex-col sm:flex-row gap-10 sm:p-7 p-0 border-gray-300 rounded-lg shadow-md mb-16">
         <div className="m-auto w-full sm:w-[20%] flex justify-center">
           <Avatar className="sm:w-32 sm:h-32 h-16 w-16">
             <AvatarImage src={user?.profile?.profilePhoto}/>
@@ -57,7 +57,7 @@ function Profile() {
               </div>
             </div>
 
-            <div className="text-left items-start  sm:w-[50%] w-full px-4 flex flex-col gap-3">
+            <div className="text-left items-start sm:mt-0 sm:pl-4 pl-0 mt-2 text-lg font-semibold sm:w-[50%] w-full px-4 flex flex-col gap-3">
               <h1>Skills :</h1>
               <div className="flex gap-2 flex-wrap">
                 {user?.profile?.skills?.length !==0 ? user.profile.skills?.map((skill,index)=>(<Badge key={index}>{skill}</Badge>)) : null}
@@ -67,7 +67,7 @@ function Profile() {
         </div>
       </div>
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-lg font-semibold mb-3">Applied Job</h1>
+        <h1 className="text-lg font-semibold mb-3 px-1">Applied Job</h1>
         <AppliedJobs/>
       </div>
       <UpdateProfile open={open} setOpen={setOpen}/>

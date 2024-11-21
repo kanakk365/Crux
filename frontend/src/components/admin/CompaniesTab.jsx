@@ -34,7 +34,7 @@ function CompaniesTab() {
   }, [allCompanies, searchCompanyByText]);
 
   return (
-    <div className="mx-10 p-5">
+    <div className="mx-0 p-2 sm:p-5 sm:mx-10">
       <Table>
         <TableCaption>A list of your recent registered companies</TableCaption>
         <TableHeader>

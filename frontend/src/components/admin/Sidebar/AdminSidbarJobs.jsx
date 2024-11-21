@@ -35,7 +35,7 @@ export function SidebarDemo() {
       });
 
       if (res.data.success) {
-        
+        console.log("done");
         dispatch(logoutUser(null));
         toast.success(res.data.message);
         navigate("/");
@@ -154,10 +154,10 @@ const Dashboard = () => {
   }, [input]);
   return (
     <div className="flex flex-1">
-      <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
-        <div className="flex justify-between m-10 px-5">
+      <div className="sm:p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
+        <div className="sm:w-[95%] flex justify-between m-10 sm:mx-10 mx-2 sm:m-10 px-0 sm:px-5">
           <ScInput
-            className="w-fit"
+            className="sm:w-fit w-40"
             placeholder="Filter by name or Role"
             onChange={(e) => setInput(e.target.value)}
           />

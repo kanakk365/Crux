@@ -1,20 +1,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "../ui/button";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@radix-ui/react-popover";
+
 import { LogOut, User2 } from "lucide-react";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ShimmerButton from "../ui/shimmer-button";
 import ShinyButton from "../ui/shiny-button";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/store/Slice/authSlice";
 import axios from "axios";
 import { USER_API_ENDPOINT } from "../utils/constants";
 import { toast } from "sonner";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -44,7 +40,7 @@ function Navbar() {
 
 
   return (
-    <div className="bg-white sm:p-0 px-4">
+    <div className="bg-white sm:p-0 px-4 ">
       <div className="flex justify-between items-center mx-auto max-w-7xl h-16 pt-2">
         <div>
           <Link to={"/"}>
@@ -65,9 +61,9 @@ function Navbar() {
             </Link>
             
           </ul>
-          <div>
+          <div className="">
             {user ? (
-              <Popover  className=" bg-white">
+              <Popover  className="z-50 ">
                 <PopoverTrigger asChild>
                   <Avatar className="cursor-pointer">
                     <AvatarImage

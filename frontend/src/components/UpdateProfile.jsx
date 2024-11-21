@@ -15,6 +15,7 @@ import axios from "axios";
 import { USER_API_ENDPOINT } from "./utils/constants";
 import { setAuthUser } from "@/store/Slice/authSlice";
 import { toast } from "sonner";
+import { IconX } from "@tabler/icons-react";
 
 function UpdateProfile({ open, setOpen }) {
   const { user } = useSelector((store) => store.auth);
@@ -39,7 +40,7 @@ function UpdateProfile({ open, setOpen }) {
   const fileChangeHandler = (e) => {
     const file = e.target.files?.[0];
     setInput({ ...input, file });
-  
+    console.log(file)
   };
 
   const submitHandler = async (e) => {
@@ -72,7 +73,7 @@ function UpdateProfile({ open, setOpen }) {
         setLoading(false);
     }
     setOpen(false);
-    
+    console.log(user)
 } 
 
   return (
@@ -83,8 +84,16 @@ function UpdateProfile({ open, setOpen }) {
           onInteractOutside={() => setOpen(false)}
         >
           <DialogHeader>
-            <DialogTitle>Update Profile</DialogTitle>
-          </DialogHeader>
+  <DialogTitle>Update Profile</DialogTitle>
+  <button
+    type="button"
+    className="absolute right-4 top-4 text-gray-500 hover:text-gray-800"
+    onClick={() => setOpen(false)} 
+  >
+    <IconX className="h-5 w-5" aria-hidden="true" />
+    <span className="sr-only">Close</span> 
+  </button>
+</DialogHeader>
           <form onSubmit={submitHandler}>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
