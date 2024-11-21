@@ -39,7 +39,7 @@ function UpdateProfile({ open, setOpen }) {
   const fileChangeHandler = (e) => {
     const file = e.target.files?.[0];
     setInput({ ...input, file });
-    console.log(file)
+  
   };
 
   const submitHandler = async (e) => {
@@ -72,7 +72,7 @@ function UpdateProfile({ open, setOpen }) {
         setLoading(false);
     }
     setOpen(false);
-    console.log(user)
+    
 } 
 
   return (

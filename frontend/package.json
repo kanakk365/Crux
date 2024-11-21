@@ -23,6 +23,7 @@
     "@shadcn/ui": "^0.0.4",
     "@tabler/icons-react": "^3.21.0",
     "axios": "^1.7.7",
+    "backend": "file:..",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",

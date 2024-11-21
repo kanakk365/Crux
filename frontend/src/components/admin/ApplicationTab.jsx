@@ -20,7 +20,7 @@ const shortlistingStatus = ["Accepted", "Rejected"];
 
 function ApplicationTab() {
   const { applicants } = useSelector((store) => store.application);
-  console.log()
+
 
   const statusHandler = async (status ,id) => {
     try {
@@ -32,7 +32,7 @@ function ApplicationTab() {
       if (res.data.success) {
         toast.success(res.data.message);
       }
-      console.log("done")
+    
     } catch (error) {
       toast.error(error.response.data.message);
     }

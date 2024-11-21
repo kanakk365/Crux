@@ -19,7 +19,7 @@ export default function JobDetails() {
       (application) => application.applicant === user?._id
     ) || false;
   const [applied, setApplied] = useState(isApplied);
-  console.log(isApplied);
+
 
   const params = useParams();
   const jobId = params.id;
@@ -42,7 +42,7 @@ export default function JobDetails() {
         dispatch(setSingleJob(updateSingleJob));
         toast.success(res.data.message);
       }
-      console.log(res);
+      
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);

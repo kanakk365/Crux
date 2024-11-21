@@ -4,7 +4,7 @@ import { Card, CardTitle, CardDescription } from "./ui/card-hover-effect";
 
 export default function LatestJobs() {
   const {allJobs}= useSelector(store=>store.job)
-  console.log(allJobs)
+
   
   
   return (

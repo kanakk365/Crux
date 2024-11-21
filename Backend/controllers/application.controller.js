@@ -91,14 +91,14 @@ export const getApplicants = async (req, res) => {
         path: "applicant",
       },
     });
-    console.log(job)
+    
     if (!job) {
       return res.status(404).json({
         message: "Job not found.",
         success: false,
       });
     }
-    console.log(job)
+   
     return res.status(200).json({
       job,
       succees: true,

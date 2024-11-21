@@ -33,7 +33,7 @@ export function SidebarDemo() {
       });
 
       if (res.data.success) {
-        console.log("done");
+       
         dispatch(logoutUser(null));
         toast.success(res.data.message);
         navigate("/");
