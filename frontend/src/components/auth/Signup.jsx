@@ -62,7 +62,7 @@ function Signup() {
         navigate("/login");
       }
     } catch (e) {
-      console.log(`Error while regestring user ${e}`);
+      console.log(`Error while registering user ${e}`);
       toast.error(e.response.data.message);
     }finally{
       dispatch(setLoading(false))
