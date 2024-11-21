@@ -9,7 +9,7 @@ export default function LatestJobs() {
   
   return (
     <div className="container mx-auto">
-      <div className="w-[80%] mx-auto">
+      <div className="sm:w-[80%] w-[93%] mx-auto">
         <h1 className=" text-3xl font-bold">Latest and Top Job Openings</h1>
 
         <HoverEffect items={allJobs} className="" />
