@@ -26,10 +26,10 @@ function HeroSection() {
       <div className="flex flex-col mt-32 mb-20 gap-24  ">
         <div className="   flex flex-col gap-16 ">
           <div className="flex flex-col gap-2">
-            <h1 className=" text-5xl sm:text-6xl font-semibold">
+            <h1 className=" text-[2.6rem] sm:text-6xl font-semibold">
               Search, Apply &{" "}
             </h1>
-            <div className=" w-full flex text-[2.8rem] sm:text-6xl justify-center  gap-1 font-semibold">
+            <div className=" w-full flex text-[2.6rem] sm:text-6xl justify-center  gap-1 font-semibold">
               <div>Get Your Dream</div>
               <div className="font-normal w-24">
                 <FlipWords />
