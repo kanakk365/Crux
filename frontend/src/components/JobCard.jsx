@@ -36,7 +36,7 @@ function JobCard({ job }) {
               <span className="text-gray-400 ">
                 <Briefcase size={18} />
               </span>
-              {job.experienceLevel}
+              {job.experienceLevel} years
             </p>
             <div className="border-l-2 border-gray-300 w-0 "></div>
             <p className="flex gap-1 items-center">

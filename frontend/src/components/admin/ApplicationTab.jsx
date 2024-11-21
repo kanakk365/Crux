@@ -20,6 +20,7 @@ const shortlistingStatus = ["Accepted", "Rejected"];
 
 function ApplicationTab() {
   const { applicants } = useSelector((store) => store.application);
+  console.log()
 
   const statusHandler = async (status ,id) => {
     try {
@@ -65,7 +66,7 @@ function ApplicationTab() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {item?.applicant?.profile?.resumeOriginalName}
+                      {item?.applicant?.profile?.resumeOriginName}
                     </a>
                   ) : (
                     <span>NA</span>

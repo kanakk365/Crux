@@ -135,7 +135,7 @@ export const updateProfile = async (req, res) => {
     const { fullName, email, phoneNumber, bio, skills } = req.body;
 
     const file = req.file;
-    console.log(file);
+    
 
     let skillsArray;
     if (skills) {

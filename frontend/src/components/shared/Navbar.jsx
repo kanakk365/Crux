@@ -44,7 +44,7 @@ function Navbar() {
 
 
   return (
-    <div className="bg-white">
+    <div className="bg-white sm:p-0 px-4">
       <div className="flex justify-between items-center mx-auto max-w-7xl h-16 pt-2">
         <div>
           <Link to={"/"}>
@@ -63,15 +63,11 @@ function Navbar() {
                 Jobs
               </li>
             </Link>
-            <Link to={"/browse"}>
-              <li className="text-gray-600 hover:text-black duration-500 hover:text-xl cursor-pointer">
-                Browse
-              </li>
-            </Link>
+            
           </ul>
           <div>
             {user ? (
-              <Popover className="z-99 bg-white">
+              <Popover  className=" bg-white">
                 <PopoverTrigger asChild>
                   <Avatar className="cursor-pointer">
                     <AvatarImage

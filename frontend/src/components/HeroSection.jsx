@@ -18,21 +18,32 @@ function HeroSection() {
   };
   return (
     <div className="text-center w-full ">
-      <GridPattern />
+      <div className="overflow:hidden">
+        
+        <GridPattern />
+      </div>
 
       <div className="flex flex-col mt-32 mb-20 gap-24  ">
         <div className="   flex flex-col gap-16 ">
           <div className="flex flex-col gap-4">
-            <h1 className=" text-6xl font-semibold">Search, Apply & </h1>
-            <div className=" w-full flex text-6xl justify-center  gap-1 font-semibold">
+            <h1 className=" text-5xl sm:text-6xl font-semibold">
+              Search, Apply &{" "}
+            </h1>
+            <div className=" w-full flex text-5xl sm:text-6xl justify-center  gap-1 font-semibold">
               <div>Get Your Dream</div>
               <div className="font-normal w-24">
                 <FlipWords />
               </div>
             </div>
           </div>
-
-          <div>
+          <div className=" sm:px-0 px-4  block sm:hidden">
+            <p>
+              Explore exciting job opportunities tailored just for you. Connect
+              with top employers and take the first step toward your ideal
+              career!
+            </p>
+          </div>
+          <div className="sm:px-0 px-4  hidden sm:block">
             <p>
               Explore exciting job opportunities tailored just for you. Connect
               with top employers and take the{" "}
@@ -41,7 +52,7 @@ function HeroSection() {
           </div>
         </div>
 
-        <div>
+        <div className="sm:px-0 px-4 ">
           <PlaceholdersAndVanishInput
             onSubmit={searchJobHandler}
             onChange={(e) => {

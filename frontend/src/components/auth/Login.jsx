@@ -15,7 +15,6 @@ import store from "@/store/store";
 import { Loader2 } from "lucide-react";
 
 function Login() {
-   
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -24,8 +23,8 @@ function Login() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading , user } = useSelector((store) => store.auth);
-  console.log(user)
+  const { loading, user } = useSelector((store) => store.auth);
+  console.log(user);
 
   function changeEventHandler(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -60,22 +59,21 @@ function Login() {
     } finally {
       dispatch(setLoading(false));
     }
-
   };
-  useEffect(()=>{
-    if(user){
-      navigate("/")
+  useEffect(() => {
+    if (user) {
+      navigate("/");
     }
-  })
+  });
   return (
     <div>
       <Navbar />
-      <div className="flex mx-auto items-center justify-center max-w-7xl ">
+      <div className="flex mx-auto items-center justify-center max-w-7xl px-4 sm:px-8 sm:mt-2 mt-16">
         <form
           onSubmit={submitHandler}
-          className="w-1/2 flex flex-col gap-2 border border-gray-200 rounded-md px-8 py-4 my-24"
+          className="w-full md:w-1/2 lg:w-1/2 flex flex-col gap-2 border border-gray-200 rounded-md px-4 sm:px-8 py-4 my-12 sm:my-24"
         >
-          <h1 className="text-2xl font-bold mb-5 ">Login</h1>
+          <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-5">Login</h1>
 
           <div>
             <Label>Email</Label>
@@ -85,6 +83,7 @@ function Login() {
               type="email"
               name="email"
               placeholder="Enter your email"
+              className="w-full"
             />
           </div>
           <div>
@@ -95,18 +94,19 @@ function Login() {
               type="password"
               name="password"
               placeholder="Enter your password"
+              className="w-full"
             />
           </div>
-          <div className="flex  flex-col">
+          <div className="flex flex-col">
             <div className="flex items-center justify-between">
-              <RadioGroup className="flex items-center gap-4 my-5">
+              <RadioGroup className="flex items-center gap-2 sm:gap-4 my-3 sm:my-5">
                 <div className="flex items-center space-x-2">
                   <ScInput
                     onChange={changeEventHandler}
                     type="radio"
                     name="role"
                     value="student"
-                    className=" !bg-transparent cursor-pointer shadow-none h-10 focus-visible:ring-0"
+                    className="!bg-transparent cursor-pointer shadow-none h-10 focus-visible:ring-0"
                   />
                   <Label htmlFor="r1">Student</Label>
                 </div>
@@ -116,7 +116,7 @@ function Login() {
                     type="radio"
                     name="role"
                     value="recruiter"
-                    className=" !bg-transparent cursor-pointer shadow-none focus-visible:ring-0"
+                    className="!bg-transparent cursor-pointer shadow-none focus-visible:ring-0"
                   />
                   <Label htmlFor="r2">Recruiter</Label>
                 </div>
@@ -124,8 +124,7 @@ function Login() {
             </div>
             {loading ? (
               <Button className="w-full my-4">
-                {" "}
-                <Loader2 className=" mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               </Button>
             ) : (
               <Button type="submit" className="w-full my-4">
@@ -133,8 +132,8 @@ function Login() {
               </Button>
             )}
           </div>
-          <span>
-            Don't have an account?
+          <span className="text-center text-sm">
+            Don't have an account?{" "}
             <Link to={"/signup"}>
               <Button
                 className="px-1 font-semibold text-blue-600"
