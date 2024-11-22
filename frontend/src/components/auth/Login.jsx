@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -20,11 +20,16 @@ function Login() {
     password: "",
     role: "",
   });
+  const loginRef = useRef();
+
+  function focusOnLogin() {
+    loginRef.current.focus()
+  }
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, user } = useSelector((store) => store.auth);
-  console.log(user);
+ 
 
   function changeEventHandler(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -56,6 +61,7 @@ function Login() {
     } catch (e) {
       console.log(`Error while login in :: ${e}`);
       toast.error(e.response.data.message);
+      focusOnLogin()
     } finally {
       dispatch(setLoading(false));
     }
@@ -78,6 +84,7 @@ function Login() {
           <div>
             <Label>Email</Label>
             <Input
+              ref={loginRef}
               onChange={changeEventHandler}
               value={input.email}
               type="email"
@@ -108,7 +115,8 @@ function Login() {
                     value="student"
                     className="!bg-transparent cursor-pointer shadow-none h-10 focus-visible:ring-0"
                   />
-                  <Label htmlFor="r1">Student</Label>
+                  <Label htmlFor="r1">Jobseeker 
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <ScInput

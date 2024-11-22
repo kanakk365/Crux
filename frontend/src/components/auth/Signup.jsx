@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -24,12 +24,17 @@ function Signup() {
     file: "",
   });
 
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading ,user} = useSelector(store => store.auth);
+  const { loading, user } = useSelector((store) => store.auth);
 
-  
+  const signupRef = useRef();
+
+
+function focusOnSignup(){
+signupRef.current.focus()
+  }
+
   function changeEventHandler(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
@@ -44,10 +49,10 @@ function Signup() {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("password", input.password);
     formData.append("role", input.role);
-    if(input.file){
-      formData.append("file",input.file)
+    if (input.file) {
+      formData.append("file", input.file);
     }
-   
+
     try {
       dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_ENDPOINT}/register`, formData, {
@@ -64,126 +69,133 @@ function Signup() {
     } catch (e) {
       console.log(`Error while registering user ${e}`);
       toast.error(e.response.data.message);
-    }finally{
-      dispatch(setLoading(false))
+      focusOnSignup()
+    } finally {
+      dispatch(setLoading(false));
     }
   };
-  useEffect(()=>{
-    if(user){
-      navigate("/")
+  useEffect(() => {
+    if (user) {
+      navigate("/");
     }
-  })
+  });
   return (
     <div>
-    <Navbar />
-    <div className="flex mx-auto items-center justify-center max-w-7xl px-4 sm:px-8">
-      <form
-        onSubmit={submitHandler}
-        className="w-full sm:w-3/4 md:w-1/2 flex flex-col gap-2 border border-gray-200 rounded-md px-4 sm:px-8 py-4 sm:my-10 my-8"
-      >
-        <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-5">Sign Up</h1>
-  
-        <div>
-          <Label> Full Name</Label>
-          <Input
-            value={input.fullName}
-            onChange={changeEventHandler}
-            type="text"
-            name="fullName"
-            placeholder="Enter your name"
-            className="w-full"
-          />
-        </div>
-        <div>
-          <Label>Email</Label>
-          <Input
-            value={input.email}
-            onChange={changeEventHandler}
-            type="email"
-            name="email"
-            placeholder="kain243@gmail.com"
-            className="w-full"
-          />
-        </div>
-        <div>
-          <Label>Phone Number</Label>
-          <Input
-            value={input.phoneNumber}
-            onChange={changeEventHandler}
-            type="text"
-            name="phoneNumber"
-            placeholder="8080808080"
-            className="w-full"
-          />
-        </div>
-        <div>
-          <Label>Password</Label>
-          <Input
-            value={input.password}
-            onChange={changeEventHandler}
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            className="w-full"
-          />
-        </div>
-        <div className="flex flex-col">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
-            <RadioGroup className="flex items-center gap-2 sm:gap-4 my-3 sm:my-5">
-              <div className="flex items-center space-x-2">
-                <ScInput
-                  onChange={changeEventHandler}
-                  type="radio"
-                  name="role"
-                  value="student"
-                  className="cursor-pointer shadow-none h-10 focus-visible:ring-0"
-                />
-                <Label htmlFor="r1">Student</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <ScInput
-                  onChange={changeEventHandler}
-                  type="radio"
-                  name="role"
-                  value="recruiter"
-                  className="!bg-transparent cursor-pointer shadow-none focus-visible:ring-0"
-                />
-                <Label htmlFor="r2">Recruiter</Label>
-              </div>
-            </RadioGroup>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mt-2 sm:mt-0">
-              <Label className="font-semibold">Profile Image</Label>
-              <Input
-                onChange={changeFileHandler}
-                accept="image/*"
-                type="file"
-                className="cursor-pointer w-full sm:w-56"
-              />
-            </div>
+      <Navbar />
+      <div className="flex mx-auto items-center justify-center max-w-7xl px-4 sm:px-8">
+        <form
+          onSubmit={submitHandler}
+          className="w-full sm:w-3/4 md:w-1/2 flex flex-col gap-2 border border-gray-200 rounded-md px-4 sm:px-8 py-4 sm:my-10 my-8"
+        >
+          <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-5">
+            Sign Up
+          </h1>
+
+          <div>
+            <Label> Full Name</Label>
+            <Input
+              ref={signupRef}
+              value={input.fullName}
+              onChange={changeEventHandler}
+              type="text"
+              name="fullName"
+              placeholder="Enter your name"
+              className="w-full"
+            />
           </div>
-  
-          {loading ? (
-            <Button className="w-full my-4">
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            </Button>
-          ) : (
-            <Button type="submit" className="w-full my-4">
-              Signup
-            </Button>
-          )}
-        </div>
-        <span className="text-center text-sm">
-          Already have an account?{" "}
-          <Link to={"/login"}>
-            <Button className="px-1 font-semibold text-blue-600" variant="link">
-              Login
-            </Button>
-          </Link>
-        </span>
-      </form>
+          <div>
+            <Label>Email</Label>
+            <Input
+              value={input.email}
+              onChange={changeEventHandler}
+              type="email"
+              name="email"
+              placeholder="kain243@gmail.com"
+              className="w-full"
+            />
+          </div>
+          <div>
+            <Label>Phone Number</Label>
+            <Input
+              value={input.phoneNumber}
+              onChange={changeEventHandler}
+              type="text"
+              name="phoneNumber"
+              placeholder="8080808080"
+              className="w-full"
+            />
+          </div>
+          <div>
+            <Label>Password</Label>
+            <Input
+              value={input.password}
+              onChange={changeEventHandler}
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              className="w-full"
+            />
+          </div>
+          <div className="flex flex-col">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+              <RadioGroup className="flex items-center gap-2 sm:gap-4 my-3 sm:my-5">
+                <div className="flex items-center space-x-2">
+                  <ScInput
+                    onChange={changeEventHandler}
+                    type="radio"
+                    name="role"
+                    value="student"
+                    className="cursor-pointer shadow-none h-10 focus-visible:ring-0"
+                  />
+                  <Label htmlFor="r1">Jobseeker 
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <ScInput
+                    onChange={changeEventHandler}
+                    type="radio"
+                    name="role"
+                    value="recruiter"
+                    className="!bg-transparent cursor-pointer shadow-none focus-visible:ring-0"
+                  />
+                  <Label htmlFor="r2">Recruiter</Label>
+                </div>
+              </RadioGroup>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mt-2 sm:mt-0">
+                <Label className="font-semibold">Profile Image</Label>
+                <Input
+                  onChange={changeFileHandler}
+                  accept="image/*"
+                  type="file"
+                  className="cursor-pointer w-full sm:w-56"
+                />
+              </div>
+            </div>
+
+            {loading ? (
+              <Button className="w-full my-4">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              </Button>
+            ) : (
+              <Button type="submit" className="w-full my-4">
+                Signup
+              </Button>
+            )}
+          </div>
+          <span className="text-center text-sm">
+            Already have an account?{" "}
+            <Link to={"/login"}>
+              <Button
+                className="px-1 font-semibold text-blue-600"
+                variant="link"
+              >
+                Login
+              </Button>
+            </Link>
+          </span>
+        </form>
+      </div>
     </div>
-  </div>
-  
   );
 }
 
