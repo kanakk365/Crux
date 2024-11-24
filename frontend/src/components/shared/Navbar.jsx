@@ -50,7 +50,7 @@ function Navbar() {
         <div className="flex items-center gap-10">
           <ul className="flex items-center font-medium text-lg gap-10">
             <Link to={"/"}>
-              <li className="text-gray-600 hover:text-black duration-500 hover:text-xl cursor-pointer">
+              <li className="text-gray-600 hover:text-black duration-500 hover:text-xl cursor-pointer hidden sm:block">
                 Home
               </li>
             </Link>
